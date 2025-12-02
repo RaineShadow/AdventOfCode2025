@@ -39,10 +39,58 @@ function processID(idRange){
 	let idRangeArray = idRange.split("-");
 	let rangeStart = parseInt(idRangeArray[0]);
 	let rangeEnd = parseInt(idRangeArray[1]);
+	let lastAddedNumber = 0;
 	
 	for(let i = rangeStart; i <= rangeEnd; i++){
 		let currentNumber = i.toString();
-		let middle = currentNumber.length / 2;
+		
+		for(let j = 1; j < currentNumber.length; j++){
+			let divideBy = currentNumber.length - j;
+			let divideByTotal = currentNumber.length / divideBy;
+
+			if(Number.isInteger(divideByTotal) && (lastAddedNumber != currentNumber)){
+				let idBrokenDown = [];
+				let count = 0;
+				let temp = '';
+				let tempCount = 0;
+
+				for(let k = 0; k < currentNumber.length; k++){
+					if(tempCount <= divideBy){
+						tempCount++;
+						temp += currentNumber[k];
+					}
+					if(tempCount == divideBy){
+						idBrokenDown[count] = temp;
+						tempCount = 0;
+						temp = '';
+						count++;
+					}
+				}
+
+				//console.log("idBrokenDown for " + divideBy + ": " + idBrokenDown);
+
+				for(let d = 0; d < idBrokenDown.length; d++){
+					if((d+1) in idBrokenDown){
+						//console.log("checking " + idBrokenDown[d] + " and " + idBrokenDown[d+1]);
+						if(idBrokenDown[d] != idBrokenDown[d+1]){
+							break;
+						} else{
+							if(d == (idBrokenDown.length - 2)){
+								sumOfID += i;
+								lastAddedNumber = i;
+								//stop looking at this number
+							}
+						}
+					}
+				}
+			}
+		}
+		
+
+
+
+
+		/*let middle = currentNumber.length / 2;
 		let firstHalf = '';
 		let secondHalf = '';
 
@@ -53,9 +101,10 @@ function processID(idRange){
 				secondHalf += currentNumber[j];
 			}
 		}
+		console.log("firstHalf: " + firstHalf + " secondHalf: " + secondHalf);
 
 		if(firstHalf == secondHalf){
 			sumOfID += i;
-		}
+		}*/
 	}
 }
