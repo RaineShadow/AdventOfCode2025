@@ -9,6 +9,7 @@ let dial_at_zero = 0;
 console.log("dial starting at: " + password_dial[current_password_dial]);
 
 export function day1(){
+	console.log("Starting day 1");
 	processLineByLine().then(temp => {
 		console.log("Password is: " + dial_at_zero);
 	});
