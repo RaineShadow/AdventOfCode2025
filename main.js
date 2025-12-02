@@ -23,6 +23,6 @@ rl.question("What day is it? ", (dayNumber) => {
 		default:
 			console.log("Not a valid day");
 	}
-	
+
 	rl.close();
 });
