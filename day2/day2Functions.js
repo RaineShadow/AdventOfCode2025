@@ -85,26 +85,5 @@ function processID(idRange){
 				}
 			}
 		}
-		
-
-
-
-
-		/*let middle = currentNumber.length / 2;
-		let firstHalf = '';
-		let secondHalf = '';
-
-		for(let j = 0; j < currentNumber.length; j++){
-			if(j < middle){
-				firstHalf += currentNumber[j];
-			} else{
-				secondHalf += currentNumber[j];
-			}
-		}
-		console.log("firstHalf: " + firstHalf + " secondHalf: " + secondHalf);
-
-		if(firstHalf == secondHalf){
-			sumOfID += i;
-		}*/
 	}
 }
