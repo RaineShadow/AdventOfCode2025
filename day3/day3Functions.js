@@ -25,41 +25,40 @@ async function processLineByLine(){
 }
 
 function findHighestJoltage(line) {
-	let firstHighest = 0;
-	let firstHighestIndex = -1;
-	let secondHighest = 0;
+	let twelveHighest = [];
+	let count = 0;
+	let joltageTotalLength = 12;
+	let joltageLengthLeft = joltageTotalLength;
 	let highestJoltageString = '';
+	let lastHighestIndex = -1;
 
-	for(let i = 0; i < line.length; i++){
-		if(i != (line.length - 1)){
-			let temp = line.charAt(i);
-			if(temp > firstHighest){
-				firstHighest = temp;
-				firstHighestIndex = i;
-			}
-		} else if((i != (line.length - 1)) && gotFirstHighest){
-			let temp2 = line.charAt(i);
-			if(temp2 > secondHighest){
-				secondHighest = temp2;
-			}
-		} else{
-			break;
-		}
-	}
+	//Get all 12 characters
+	for(let i = 0; i < joltageTotalLength; i++){
+		let lastHighest = 0;
 
-	for(let i = 0; i < line.length; i++){
-		if(i > firstHighestIndex){
-			let temp = line.charAt(i);
-			if(temp > secondHighest){
-				secondHighest = temp;
+		//Go through whole character line
+		for(let j = 0; j < line.length; j++){
+			let enoughCharactersLeft = line.length - joltageLengthLeft;
+			if(j <= enoughCharactersLeft && j > lastHighestIndex){
+				//Can look at characters
+				let temp = line.charAt(j);
+				if(temp > lastHighest){
+					lastHighest = temp;
+					lastHighestIndex = j;
+				}
 			}
 		}
+
+		twelveHighest[count] = lastHighest;
+		count++;
+		joltageLengthLeft--;
 	}
 
-	//console.log("firstHighest: " + firstHighest + " secondHighest: " + secondHighest);
-	highestJoltageString += firstHighest;
-	highestJoltageString += secondHighest;
-	//console.log("highestJoltageString: " + highestJoltageString);
+	for(let i = 0; i < joltageTotalLength; i++){
+		highestJoltageString += twelveHighest[i];
+	}
+
+	console.log("highestJoltageString: " + highestJoltageString);
 	joltageSum += parseInt(highestJoltageString);
 	console.log("joltageSum: " + joltageSum);
 }
