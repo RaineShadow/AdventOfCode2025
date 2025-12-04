@@ -3,6 +3,7 @@ import readLine from 'readline';
 import {day1} from './day1/day1Functions.js';
 import {day2} from './day2/day2Functions.js';
 import {day3} from './day3/day3Functions.js';
+import {day4} from './day4/day4Functions.js';
 
 console.log("Advent of Code 2025");
 
@@ -23,6 +24,9 @@ rl.question("What day is it? ", (dayNumber) => {
 			break;
 		case '3':
 			day3();
+			break;
+		case '4':
+			day4();
 			break;
 		default:
 			console.log("Not a valid day");
