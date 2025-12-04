@@ -7,8 +7,10 @@ export function day4(){
 }
 
 let paperMatrix = [];
+let tempMatrix = [];
 let paperCount = 0;
 let accessiblePaper = 0;
+let stillAccessible = false;
 
 //Read File Line by Line
 async function processLineByLine(){
@@ -27,15 +29,29 @@ async function processLineByLine(){
 
 	processPaper();
 	console.log("Accessible Paper: " + accessiblePaper);
+
+	//Continue looping through paper
+	//Row number
+	for(let i = 0; i < paperMatrix.length; i++){
+		paperMatrix[i] = tempMatrix[i];
+	}
+
+	while(stillAccessible){
+		stillAccessible = false;
+		processPaper();
+		console.log("Accessible Paper: " + accessiblePaper);
+	}
 }
 
 function processCharByChar(line){
 	for(let i = 0; i < line.length; i++){
 		if(i == 0){
 			paperMatrix[paperCount] = [];
+			tempMatrix[paperCount] = [];
 		}
 
 		paperMatrix[paperCount][i] = line.charAt(i);
+		tempMatrix[paperCount][i] = line.charAt(i);
 
 		if(i == (line.length - 1)){
 			paperCount++;
@@ -49,12 +65,14 @@ function processPaper() {
 		//Column number
 		for(let j = 0; j < paperMatrix[i].length; j++){
 			if(paperMatrix[i][j] == '@'){
-				console.log("paper at " + i + ", " + j);
+				//console.log("paper at " + i + ", " + j);
 				let fewRollsOfPaper = checkSurroundingPaper(i, j, paperMatrix[i].length);
-				console.log("fewRollsOfPaper: " + fewRollsOfPaper);
-				console.log("")
+				//console.log("fewRollsOfPaper: " + fewRollsOfPaper);
+				//console.log("")
 				if(fewRollsOfPaper){
+					tempMatrix[i][j] = '.';
 					accessiblePaper += 1;
+					stillAccessible = true;
 				}
 			}
 		}
