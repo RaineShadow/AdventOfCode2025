@@ -5,6 +5,7 @@ import {day2} from './day2/day2Functions.js';
 import {day3} from './day3/day3Functions.js';
 import {day4} from './day4/day4Functions.js';
 import {day5} from './day5/day5Functions.js';
+import {day6} from './day6/day6Functions.js';
 
 console.log("Advent of Code 2025");
 
@@ -31,6 +32,9 @@ rl.question("What day is it? ", (dayNumber) => {
 			break;
 		case '5':
 			day5();
+			break;
+		case '6':
+			day6();
 			break;
 		default:
 			console.log("Not a valid day");
