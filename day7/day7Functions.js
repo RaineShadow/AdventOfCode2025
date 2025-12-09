@@ -8,6 +8,8 @@ export function day7(){
 
 let originalInput = [];
 let originalInputCount = 0;
+let timelineCount = [];
+let finalTimelineCount = 0;
 
 //Read File Line by Line
 async function processLineByLine(){
@@ -32,6 +34,10 @@ function tractorBeam(){
 	let startingPoint = -1;
 	let carrotCount = 0;
 
+	for(let i = 0; i < originalInput[0].length; i++){
+		timelineCount[i] = 0;
+	}
+
 	//For each line
 	for(let i = 0; i < originalInput.length; i++){	
 		//Find Starting point
@@ -39,13 +45,14 @@ function tractorBeam(){
 			for(let j = 0; j < originalInput[i].length; j++){
 				if(originalInput[i].charAt(j) == "S"){
 					startingPoint = j;
+					timelineCount[j] = 1;
+					console.log("timelineCount: " + timelineCount);
 				}
 			}
 
 			//Write first beams
 			for(let j = 0; j < originalInput[i+1].length; j++){
 				if(j == startingPoint){
-					//originalInput[i+1][j] = "|";
 					originalInput[i+1] = replace(originalInput[i+1], j, "|");
 					i++;
 				}
@@ -57,13 +64,11 @@ function tractorBeam(){
 			for(let j = 0; j < originalInput[i].length; j++){
 				if(originalInput[i-1].charAt(j) == "|"){
 					if(originalInput[i].charAt(j) == "^"){
-						//originalInput[i][j-1] = "|";
 						originalInput[i] = replace(originalInput[i], j-1, "|");
-						//originalInput[i][j+1] = "|";
 						originalInput[i] = replace(originalInput[i], j+1, "|");
+						updateTimeline(j);
 						carrotCount++;
 					} else if(originalInput[i].charAt(j) == "."){
-						//originalInput[i][j] = "|";
 						originalInput[i] = replace(originalInput[i], j, "|");
 					}
 				}
@@ -76,6 +81,9 @@ function tractorBeam(){
 	}
 
 	console.log("Carrot count: " + carrotCount);
+	partTwoMath();
+	console.log("Timeline count: " + finalTimelineCount);
+	//7382 too low
 }
 
 function replace(originalInputLine, index, char) {
@@ -83,5 +91,22 @@ function replace(originalInputLine, index, char) {
 		return originalInputLine;
 	} else {
 		return originalInputLine.substring(0, index) + char + originalInputLine.substring(index+1);
+	}
+}
+
+function updateTimeline(index){
+	if((index - 1) < 0 || (index + 1) > originalInput[0].length){
+		console.log("doesn't fit");
+	} else{
+		timelineCount[index-1] += timelineCount[index];
+		timelineCount[index+1] += timelineCount[index];
+		timelineCount[index] = 0;
+		console.log("timelineCount: " + timelineCount);
+	}
+}
+
+function partTwoMath() {
+	for(let j = 0; j < timelineCount.length; j++){
+		finalTimelineCount += parseInt(timelineCount[j]);
 	}
 }
